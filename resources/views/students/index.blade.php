@@ -42,7 +42,7 @@
                         <h3 class="text-base font-semibold text-gray-900 dark:text-gray-100">
                             {{ __('Student List') }}
                         </h3>
-                        <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
+                        <p id="student-count-indicator" data-count="{{ $students->total() }}" class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">
                             {{ trans_choice('{0} No students yet|{1} :count student|[2,*] :count students', $students->total(), ['count' => $students->total()]) }}
                         </p>
                     </div>
@@ -150,11 +150,13 @@
                     </table>
                 </div>
 
-                @if ($students->hasPages())
-                    <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
-                        {{ $students->links() }}
-                    </div>
-                @endif
+                <div id="student-pagination-container">
+                    @if ($students->hasPages())
+                        <div class="px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                            {{ $students->links() }}
+                        </div>
+                    @endif
+                </div>
             </div>
         </div>
     </div>
