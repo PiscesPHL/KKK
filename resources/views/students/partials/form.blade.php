@@ -2,6 +2,7 @@
 
 @php
     $yearLevels = \App\Models\Student::yearLevels();
+    $courses = \App\Models\Student::courses();
 @endphp
 
 <div>
@@ -80,13 +81,21 @@
 
 <div>
     <x-input-label for="course" :value="__('Course')" />
-    <x-text-input
+    <select
         id="course"
         name="course"
-        type="text"
-        class="mt-1 block w-full"
-        :value="old('course', $student?->course)"
+        class="mt-1 block w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm"
         required
-    />
+    >
+        <option value="">{{ __('Select course') }}</option>
+        @foreach ($courses as $value => $label)
+            <option
+                value="{{ $value }}"
+                @selected(old('course', $student?->course) === $value)
+            >
+                {{ __($label) }}
+            </option>
+        @endforeach
+    </select>
     <x-input-error class="mt-2" :messages="$errors->get('course')" />
 </div>

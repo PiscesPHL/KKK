@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Events\StudentCreated;
+use App\Events\StudentDeleted;
+use App\Events\StudentUpdated;
 use App\Http\Requests\StoreStudentRequest;
 use App\Http\Requests\UpdateStudentRequest;
 use App\Models\Student;
@@ -61,6 +63,8 @@ class StudentController extends Controller
     {
         $student->update($request->validated());
 
+        broadcast(new StudentUpdated($student))->toOthers();
+
         return redirect()
             ->route('students.index')
             ->with('status', 'student-updated');
@@ -72,6 +76,8 @@ class StudentController extends Controller
     public function destroy(Student $student): RedirectResponse
     {
         $student->delete();
+
+        broadcast(new StudentDeleted($student))->toOthers();
 
         return redirect()
             ->route('students.index')

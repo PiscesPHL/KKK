@@ -30,7 +30,7 @@ class StoreStudentRequest extends FormRequest
             'email' => ['required', 'string', 'email', 'max:255', 'unique:students,email'],
             'student_number' => ['required', 'string', 'max:255', 'unique:students,student_number'],
             'year_level' => ['required', 'integer', Rule::in(array_keys(Student::yearLevels()))],
-            'course' => ['required', 'string', 'max:255'],
+            'course' => ['required', 'string', Rule::in(array_keys(Student::courses()))],
         ];
     }
 }

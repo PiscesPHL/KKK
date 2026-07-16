@@ -9,7 +9,7 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class StudentCreated implements ShouldBroadcastNow
+class StudentDeleted implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -22,22 +22,15 @@ class StudentCreated implements ShouldBroadcastNow
 
     public function broadcastAs(): string
     {
-        return 'student.created';
+        return 'student.deleted';
     }
 
     public function broadcastWith(): array
     {
         return [
             'id' => $this->student->id,
-            'student_number' => $this->student->student_number,
             'first_name' => $this->student->first_name,
             'last_name' => $this->student->last_name,
-            'email' => $this->student->email,
-            'course' => $this->student->course,
-            'year_level' => $this->student->year_level,
-            'year_level_label' => $this->student->year_level_label,
-            'edit_url' => route('students.edit', $this->student),
-            'destroy_url' => route('students.destroy', $this->student),
         ];
     }
 }
